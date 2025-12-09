@@ -474,48 +474,116 @@
                 <h2>Code Samples</h2>
                 <p>Here are examples of my best programming work demonstrating clean code, best practices, and problem-solving skills.</p>
 
-                <h3 style="margin-top: 2rem;">Sample 1: React Component with Hooks</h3>
+                <h3 style="margin-top: 2rem;">Sample 1: Python Password Checker</h3>
                 <div class="code-sample">
-<pre>import React, { useState, useEffect } from 'react';
+<pre>import re
+from typing import Dict, List
 
-const DataDashboard = ({ apiEndpoint }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+class PasswordAnalyzer:
+    """Analyzes password strength based on multiple criteria."""
+    
+    def __init__(self, password: str):
+        self.password = password
+        self.length = len(password)
+    
+    def check_criteria(self) -> Dict[str, bool]:
+        """Check various password strength criteria."""
+        return {
+            'length': self.length >= 12,
+            'uppercase': bool(re.search(r'[A-Z]', self.password)),
+            'lowercase': bool(re.search(r'[a-z]', self.password)),
+            'numbers': bool(re.search(r'\d', self.password)),
+            'special': bool(re.search(r'[!@#$%^&*(),.?":{}|<>]', self.password)),
+            'no_common': self.password.lower() not in ['password', '12345678', 'qwerty']
+        }
+    
+    def calculate_strength(self) -> tuple[int, str]:
+        """Calculate overall password strength score and rating."""
+        criteria = self.check_criteria()
+        score = sum(criteria.values()) * 100 // len(criteria)
+        
+        if score >= 80:
+            rating = "Strong"
+        elif score >= 50:
+            rating = "Moderate"
+        else:
+            rating = "Weak"
+        
+        return score, rating
+    
+    def get_suggestions(self) -> List[str]:
+        """Generate improvement suggestions."""
+        criteria = self.check_criteria()
+        suggestions = []
+        
+        if not criteria['length']:
+            suggestions.append("Use at least 12 characters")
+        if not criteria['uppercase']:
+            suggestions.append("Add uppercase letters (A-Z)")
+        if not criteria['lowercase']:
+            suggestions.append("Add lowercase letters (a-z)")
+        if not criteria['numbers']:
+            suggestions.append("Include numbers (0-9)")
+        if not criteria['special']:
+            suggestions.append("Add special characters (!@#$%)")
+        if not criteria['no_common']:
+            suggestions.append("Avoid common passwords")
+        
+        return suggestions
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(apiEndpoint);
-        if (!response.ok) throw new Error('Failed to fetch');
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchData();
-  }, [apiEndpoint]);
+def main():
+    print("Password Strength Analyzer\n")
+    print("=" * 50)
+    
+    # Example passwords to test
+    test_passwords = [
+        "pass123",
+        "MyPassword2024",
+        "Tr0ng!P@ssw0rd#2024"
+    ]
+    
+    for pwd in test_passwords:
+        analyzer = PasswordAnalyzer(pwd)
+        score, rating = analyzer.calculate_strength()
+        suggestions = analyzer.get_suggestions()
+        
+        print(f"\nPassword: {'*' * len(pwd)}")
+        print(f"Score: {score}/100")
+        print(f"Rating: {rating}")
+        
+        if suggestions:
+            print("\nSuggestions for improvement:")
+            for i, suggestion in enumerate(suggestions, 1):
+                print(f"  {i}. {suggestion}")
+        else:
+            print("\nExcellent! Your password is strong.")
+        
+        print("-" * 50)
+    
+    # Interactive mode
+    print("\nTry your own password:")
+    user_pwd = input("Enter a password to analyze: ")
+    
+    if user_pwd:
+        analyzer = PasswordAnalyzer(user_pwd)
+        score, rating = analyzer.calculate_strength()
+        suggestions = analyzer.get_suggestions()
+        
+        print(f"\nResults:")
+        print(f"Score: {score}/100")
+        print(f"Rating: {rating}")
+        
+        if suggestions:
+            print("\nHow to improve:")
+            for i, suggestion in enumerate(suggestions, 1):
+                print(f"  {i}. {suggestion}")
+        else:
+            print("\nGreat job! Your password is strong.")
 
-  if (loading) return &lt;div&gt;Loading...&lt;/div&gt;;
-  if (error) return &lt;div&gt;Error: {error}&lt;/div&gt;;
 
-  return (
-    &lt;div className="dashboard"&gt;
-      {data.map(item => (
-        &lt;div key={item.id} className="card"&gt;
-          &lt;h3&gt;{item.title}&lt;/h3&gt;
-          &lt;p&gt;{item.description}&lt;/p&gt;
-        &lt;/div&gt;
-      ))}
-    &lt;/div&gt;
-  );
-};
-
-export default DataDashboard;</pre>
+if __name__ == "__main__":
+    main()</pre>
                 </div>
 
                 <h3 style="margin-top: 2rem;">Sample 2: Python Algorithm - Binary Search</h3>
@@ -584,8 +652,7 @@ print(f"Found at index: {result}")  # Output: Found at index: 3</pre>
                     <ul style="margin-left: 1.5rem; margin-top: 1rem;">
                         <li>Consistently received positive feedback from both coworkers and managers</li>
                         <li>Operated creatively on multiple projects that led to successful ideas being incorporated for a positive consumer experience</li>
-                        <li></li>
-                        <li></li>
+                        <li>Developed different programs to increase personal and team productivity</li>
                     </ul>
                 </div>
 
